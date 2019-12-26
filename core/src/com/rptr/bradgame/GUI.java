@@ -13,6 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class GUI
 {
     private Stage stage;

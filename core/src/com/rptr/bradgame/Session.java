@@ -22,7 +22,7 @@ public class Session {
         newGame();
     }
 
-    void newGame ()
+    private void newGame ()
     {
         turn = 1;
         state = game.getStartingState();

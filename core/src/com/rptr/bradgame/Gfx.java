@@ -10,7 +10,12 @@ public class Gfx
 {
     private static HashMap<String, Texture> textures = new HashMap<>();
 
-    public static void drawPiece (Batch batch, Piece piece)
+    static void drawPiece (Batch batch, Piece piece)
+    {
+        drawPiece(batch, piece, 0, 0);
+    }
+
+    static void drawPiece (Batch batch, Piece piece, int x, int y)
     {
         String file = piece.getType().getFile();
 
@@ -18,15 +23,15 @@ public class Gfx
             return;
 
         Texture tex = Gfx.getTexture(file);
-        batch.draw(tex, 0, 0);
+        batch.draw(tex, x, y);
     }
 
-    public static void loadTexture (String file)
+    static void loadTexture (String file)
     {
         textures.put(file, new Texture(file));
     }
 
-    public static Texture getTexture (String file)
+    static Texture getTexture (String file)
     {
         return textures.get(file);
     }

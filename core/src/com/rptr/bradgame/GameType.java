@@ -22,12 +22,16 @@ class GameType
     private ArrayList<Transition> transitions;
     private HashMap<String, ArrayList<PieceType>> categories;
 
+    // highly TEMP
+    private ArrayList<Widget> layout;
+
     GameType ()
     {
         states = new ArrayList<>();
         transitions = new ArrayList<>();
         pieceTypes = new ArrayList<>();
         categories = new HashMap<>();
+        layout = new ArrayList<>();
     }
 
     void save ()
@@ -86,6 +90,10 @@ class GameType
                     parseTransitions(settings.getJSONArray("transitions"));
                     break;
 
+                case "personalLayout":
+                    parsePlayerLayout(settings.getJSONArray("personalLayout"));
+                    break;
+
                 default:
                     System.out.format("Unsupported setting: %s\n", key);
                     break;
@@ -125,6 +133,19 @@ class GameType
         {
             JSONObject obj = (JSONObject)transitions.get(i);
             this.transitions.add(new Transition(obj));
+        }
+    }
+
+    private void parsePlayerLayout (JSONArray layout)
+    {
+        for (int i = 0; i < layout.length(); i ++)
+        {
+            JSONObject obj = (JSONObject)layout.get(i);
+            this.layout.add(new Widget(
+                    obj.getString("widget"),
+                    obj.getString("category"),
+                    obj.getInt("x"),
+                    obj.getInt("y")));
         }
     }
 
@@ -237,5 +258,10 @@ class GameType
         Piece piece = new Piece(type, 0);
 
         return piece;
+    }
+
+    ArrayList<Widget> getPersonalLayout ()
+    {
+        return layout;
     }
 }

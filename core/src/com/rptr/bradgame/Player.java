@@ -1,5 +1,6 @@
 package com.rptr.bradgame;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Player
@@ -27,6 +28,11 @@ public class Player
     void givePiece (Piece piece)
     {
         pieces.add(piece);
+    }
+
+    ArrayList<Piece> getAllPieces ()
+    {
+        return pieces;
     }
 
     @Override

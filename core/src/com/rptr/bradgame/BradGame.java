@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class BradGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
@@ -36,7 +38,9 @@ public class BradGame extends ApplicationAdapter {
 				"states : [" +
 					"{name : 'pregame'," +
 					" events : [" +
-					"{reward : [{piece : 'project cards', amount : 10}]}" +
+					"{reward : [{piece : 'project cards', amount : 10}," +
+								"{piece : 'prelude cards', amount : 2}," +
+								"{piece : 'corporation cards', amount : 1}]}" +
 					"]}," +
 					"{name : 'game'}," +
 					"{name : 'production'," +
@@ -82,7 +86,9 @@ public class BradGame extends ApplicationAdapter {
 				"]," + // player
 
 				"personalLayout : [" +
-					"{}" +
+					"{widget : 'card hand', category : 'project cards', x : 20, y: 200}," +
+					"{widget : 'card hand', category : 'prelude cards', x : 600, y : 200}," +
+					"{widget : 'card hand', category : 'corporation cards', x : 600, y : 100}" +
 				"]" +
 
 				"" +
@@ -180,9 +186,6 @@ public class BradGame extends ApplicationAdapter {
 					font.draw(batch, info, 200, 700 - i * 20);
 					i++;
 
-				} else
-				{
-					Gfx.drawPiece(batch, piece);
 				}
 			}
 
@@ -191,6 +194,15 @@ public class BradGame extends ApplicationAdapter {
 
 		// TURN
 		font.draw(batch, session.getTurnInfo(), 400, 700);
+
+		// WIDGETS
+		ArrayList<Widget> layout = session.getGame().getPersonalLayout();
+		ArrayList<Piece> pieces = session.getPlayer().getAllPieces();
+
+		for (Widget widget : layout)
+		{
+			widget.draw(batch, pieces);
+		}
 
 		batch.end();
 
