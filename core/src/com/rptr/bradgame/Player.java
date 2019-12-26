@@ -2,6 +2,7 @@ package com.rptr.bradgame;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Player
 {
@@ -60,10 +61,51 @@ public class Player
         return null;
     }
 
+    boolean canAfford (Piece piece)
+    {
+        boolean afford = true;
+        PieceType type = piece.getType();
+        HashMap<String, Integer> costs = type.costs;
+
+        for (String key : costs.keySet())
+        {
+            // TODO support non-number piece
+            int amount = costs.get(key);
+
+            if (getPiece(key).getValue() < amount)
+            {
+                afford = false;
+                break;
+            }
+        }
+
+        return afford;
+    }
+
+    void payPiece (Piece piece)
+    {
+        PieceType type = piece.getType();
+        HashMap<String, Integer> costs = type.costs;
+
+        for (String key : costs.keySet())
+        {
+            // TODO support non-number piece
+            int amount = costs.get(key);
+            getPiece(key).increment(-amount);
+        }
+    }
+
     void playPiece (Piece piece)
     {
-        pieces.remove(piece);
-        System.out.format("Play & remove piece %s\n", piece.toString());
+        if (canAfford(piece))
+        {
+            pieces.remove(piece);
+            System.out.format("Play & remove piece %s\n", piece.toString());
+            payPiece(piece);
+        } else
+        {
+            // TODO notif
+        }
     }
 
     @Override

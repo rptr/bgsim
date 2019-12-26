@@ -136,7 +136,7 @@ public class BradGame extends ApplicationAdapter {
 		mars.parsePieceType("{id : 'player marker', file : 'gem.png'}");
 
 		mars.parsePieceType("{category : 'project cards'," +
-				"cost : [{money : 7}]," +
+				"cost : [{piece : money, amount : 7}]," +
 				"id : 'SF Memorial'," +
 				"reward : [{category : 'project cards', amount : 1}]," +
 				"file : 'card.png'}");

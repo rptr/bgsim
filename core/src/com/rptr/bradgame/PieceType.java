@@ -1,6 +1,9 @@
 package com.rptr.bradgame;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class PieceType
 {
@@ -11,8 +14,11 @@ public class PieceType
     private String type = "";
     private JSONObject settings;
 
+    HashMap<String, Integer> costs;
+
     PieceType (JSONObject data)
     {
+        costs = new HashMap<>();
         settings = data;
 
         for (String key : data.keySet())
@@ -40,10 +46,25 @@ public class PieceType
                     type = data.getString(key);
                     break;
 
+                case "cost":
+                    parseCosts(data.getJSONArray("cost"));
+                    break;
+
                 default:
                     System.out.format("Unsupported piece setting: %s\n", key);
                     break;
             }
+        }
+    }
+
+    private void parseCosts (JSONArray costs)
+    {
+        for (int i = 0; i < costs.length(); i++)
+        {
+            JSONObject obj = (JSONObject)costs.get(i);
+
+            this.costs.put(obj.getString("piece"),
+                    obj.getInt("amount"));
         }
     }
 
@@ -68,4 +89,6 @@ public class PieceType
     {
         return type;
     }
+
+
 }
