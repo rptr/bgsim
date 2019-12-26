@@ -27,14 +27,13 @@ public class AccordionGroup extends HorizontalGroup
         super.draw(batch, parentAlpha);
 
         float x = Gdx.input.getX() - getX();
-        float w = getWidth();
+        float w = getPrefWidth();
         float part = w / sortedChildren.size();
 
-        if (x < 0 || x > w) return;
+        if (x < 0 || x > getX() + w) return;
 
         for (Actor c : sortedChildren)
         {
-
             if (x > c.getX() && x < c.getX() + part)
             {
                 c.toFront();

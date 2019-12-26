@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 
 import java.util.ArrayList;
 
@@ -30,7 +32,7 @@ public class GUI
     private Skin skin;
     private Session currentSession;
 
-    private Table layoutTable;
+    private Group layoutTable;
 
     void setup ()
     {
@@ -64,9 +66,8 @@ public class GUI
         table.setFillParent(true);
         stage.addActor(table);
 
-        layoutTable = new Table();
-        table.setFillParent(true);
-        table.addActor(layoutTable);
+        layoutTable = new Group();
+        stage.addActor(layoutTable);
 
         table.setDebug(true);
         layoutTable.setDebug(true);
@@ -110,12 +111,15 @@ public class GUI
         for (Widget widget : layout)
         {
             final AccordionGroup hand = new AccordionGroup();
-            hand.space(-100);
+            // stack them
+            hand.space(-110);
+            hand.setPosition(widget.x, widget.y);
 
             for (Piece p : pieces) {
+                if (!p.getType().getCategory().equals(widget.category))
+                    continue;
+
                 final ImageButton butt = new ImageButton(skin);
-                butt.setX(0);
-                butt.setY(0);
                 hand.addActor(butt);
 
                 butt.addListener(new ClickListener() {
@@ -125,7 +129,7 @@ public class GUI
                 });
             }
 
-            layoutTable.add(hand);
+            layoutTable.addActor(hand);
         }
 
         // XXX temp
