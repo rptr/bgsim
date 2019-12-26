@@ -26,10 +26,23 @@ public class Event
             for (int i = 0; i < rewards.length(); i ++)
             {
                 JSONObject reward = (JSONObject)rewards.get(i);
+                Reward newReward = null;
 
-                this.rewards.add(new Reward(
-                        reward.getString("piece"),
-                        reward.getInt("amount")));
+                if (reward.has("amount"))
+                {
+                    newReward = new CategoryReward(
+                            reward.getString("category"),
+                            reward.getInt("amount"));
+
+                } else if (reward.has("income"))
+                {
+                    newReward = new IncomeReward(
+                            reward.getString("piece"),
+                            reward.getString("income"));
+                }
+
+                if (newReward != null)
+                    this.rewards.add(newReward);
             }
         }
     }
@@ -38,7 +51,7 @@ public class Event
     {
         for (Reward reward : rewards)
         {
-            session.givePiecesOfCategory(reward.category, reward.amount);
+            reward.give(session);
         }
     }
 }

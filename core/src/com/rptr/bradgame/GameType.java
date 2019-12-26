@@ -181,12 +181,18 @@ class GameType
         int value = obj.has("value") ? obj.getInt("value") : 0;
         PieceType pt = getPieceType(type);
 
+        // default -- set id to same as type
+        if (id.equals("") && !type.equals(""))
+        {
+            id = type;
+        }
+
         // normal piece
         if (!type.equals("") && pt != null)
         {
             for (int j = 0; j < num; j ++)
             {
-                pieces.add(new Piece(pt, value));
+                pieces.add(new Piece(id, pt, value));
             }
 
             // "global" piece
@@ -255,7 +261,7 @@ class GameType
         ArrayList<PieceType> all = getPieceCategory(category);
 
         PieceType type = all.get(MathUtils.random(all.size() - 1));
-        Piece piece = new Piece(type, 0);
+        Piece piece = new Piece("<noid>", type, 0);
 
         return piece;
     }

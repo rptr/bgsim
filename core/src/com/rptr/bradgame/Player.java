@@ -35,6 +35,31 @@ public class Player
         return pieces;
     }
 
+    /*
+     * Increment a "number"-type piece.
+     */
+    void incrementPiece (String piece, int amount)
+    {
+        Piece p = getPiece(piece);
+
+        // TODO use a constant, not a string
+        if (p.getType().getType().equals("number"))
+        {
+            p.increment(amount);
+        }
+    }
+
+    Piece getPiece (String id)
+    {
+        for (Piece p : pieces)
+        {
+            if (p.getId().equals(id))
+                return p;
+        }
+
+        return null;
+    }
+
     @Override
     public String toString ()
     {

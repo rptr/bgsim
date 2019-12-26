@@ -38,15 +38,20 @@ public class BradGame extends ApplicationAdapter {
 				"states : [" +
 					"{name : 'pregame'," +
 					" events : [" +
-					"{reward : [{piece : 'project cards', amount : 10}," +
-								"{piece : 'prelude cards', amount : 2}," +
-								"{piece : 'corporation cards', amount : 1}]}" +
+					"{reward : [{category : 'project cards', amount : 10}," +
+								"{category : 'prelude cards', amount : 2}," +
+								"{category : 'corporation cards', amount : 1}]}" +
 					"]}," +
+
 					"{name : 'game'}," +
+
 					"{name : 'production'," +
 					" events : [" +
-					"{reward : [{piece : 'project cards', amount : 4}]}" +
+					"{reward : [{category : 'project cards', amount : 4}," +
+								"{piece : 'money', income : 'moneyIncome'}," +
+								"{piece : 'money', income : 'rating'}]}" +
 					"]}," +
+
 					"{name : 'count score'}" +
 				"]," + // states
 
@@ -82,7 +87,14 @@ public class BradGame extends ApplicationAdapter {
 					"{type : 'titanium'}," +
 					"{type : 'plant'}," +
 					"{type : 'energy'}," +
-					"{type : 'heat'}" +
+					"{type : 'heat'}," +
+
+					"{type : 'moneyIncome'}," +
+					"{type : 'steelIncome'}," +
+					"{type : 'titaniumIncome'}," +
+					"{type : 'plantIncome'}," +
+					"{type : 'energyIncome'}," +
+					"{type : 'heatIncome'}" +
 				"]," + // player
 
 				"personalLayout : [" +
@@ -113,13 +125,20 @@ public class BradGame extends ApplicationAdapter {
 		mars.parsePieceType("{id : 'energy', type : number}");
 		mars.parsePieceType("{id : 'heat', type : number}");
 
+		mars.parsePieceType("{id : 'moneyIncome', type : number}");
+		mars.parsePieceType("{id : 'steelIncome', type : number}");
+		mars.parsePieceType("{id : 'titaniumIncome', type : number}");
+		mars.parsePieceType("{id : 'plantIncome', type : number}");
+		mars.parsePieceType("{id : 'energyIncome', type : number}");
+		mars.parsePieceType("{id : 'heatIncome', type : number}");
+
 		mars.parsePieceType("{id : 'score guy', file : 'gem.png'}");
 		mars.parsePieceType("{id : 'player marker', file : 'gem.png'}");
 
 		mars.parsePieceType("{category : 'project cards'," +
 				"cost : [{money : 7}]," +
 				"id : 'SF Memorial'," +
-				"reward : [{piece : 'project cards', amount : 1}]," +
+				"reward : [{category : 'project cards', amount : 1}]," +
 				"file : 'card.png'}");
 		mars.parsePieceType("{category : 'prelude cards'," +
 				"id : 'Allied Banks'," +

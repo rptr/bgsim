@@ -6,16 +6,11 @@ public class Piece
     private String id = "";
     private int value = 0;
 
-    Piece (PieceType type, int value)
-    {
-        this.type = type;
-        this.value = value;
-    }
-
-    // "global" piece
-    Piece (String id)
+    Piece (String id, PieceType type, int value)
     {
         this.id = id;
+        this.type = type;
+        this.value = value;
     }
 
     String getId ()
@@ -28,7 +23,7 @@ public class Piece
         return type == null ? "" : type.getFile();
     }
 
-    float getValue ()
+    int getValue ()
     {
         return value;
     }
@@ -47,5 +42,10 @@ public class Piece
     PieceType getType ()
     {
         return type;
+    }
+
+    void increment (int amount)
+    {
+        value += amount;
     }
 }
