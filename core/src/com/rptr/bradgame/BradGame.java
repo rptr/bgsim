@@ -40,7 +40,7 @@ public class BradGame extends ApplicationAdapter {
 					" events : [" +
 					"{reward : [{category : 'project cards', amount : 10}," +
 								"{category : 'prelude cards', amount : 2}," +
-								"{category : 'corporation cards', amount : 1}]}" +
+								"{category : 'corporation cards', amount : 1}]}," +
 					"]}," +
 
 					"{name : 'game'}," +
@@ -137,15 +137,18 @@ public class BradGame extends ApplicationAdapter {
 
 		mars.parsePieceType("{category : 'project cards'," +
 				"cost : [{piece : money, amount : 7}]," +
+				"use : player," +
 				"id : 'SF Memorial'," +
 				"reward : [{category : 'project cards', amount : 1}]," +
 				"file : 'card.png'}");
 		mars.parsePieceType("{category : 'prelude cards'," +
 				"id : 'Allied Banks'," +
+				"use : immediate, " +
 				"reward : [{piece : money, amount : 3}]," +
 				"file : 'card.png'}");
 		mars.parsePieceType("{category : 'corporation cards', " +
 				"id : 'Beginner Corporation'," +
+				"use : immediate," +
 				"reward : [{piece : money, amount : 42}]," +
 				"file : 'card.png'}");
 

@@ -5,31 +5,26 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class State
+class State implements Eventful
 {
     private String name;
-    private ArrayList<Event> events;
+    private Events events;
 
     State (JSONObject obj)
     {
-        events = new ArrayList<>();
+        events = new Events();
 
         if (obj.has("events"))
         {
-            JSONArray events = obj.getJSONArray("events");
-            for (int i = 0; i < events.length(); i ++)
-            {
-                JSONObject evt = (JSONObject)events.get(i);
-                this.events.add(new Event(evt));
-            }
+            events.parse(obj.getJSONArray("events"));
         }
 
         name = obj.getString("name");
     }
 
-    void performEvents (Session session)
+    public void performEvents (Session session)
     {
-        for (Event e : events)
+        for (Event e : events.events)
         {
             e.applyRewards(session);
         }
@@ -42,6 +37,6 @@ public class State
 
     ArrayList<Event> getEvents ()
     {
-        return events;
+        return events.events;
     }
 }

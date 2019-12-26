@@ -3,21 +3,25 @@ package com.rptr.bradgame;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PieceType
+public class PieceType implements Eventful
 {
     private String id = "";
     private String category = "";
     private String name = "";
     private String file = "";
     private String type = "";
+    private String usage = "";
     private JSONObject settings;
+    private Events events;
 
     HashMap<String, Integer> costs;
 
     PieceType (JSONObject data)
     {
+        events = new Events();
         costs = new HashMap<>();
         settings = data;
 
@@ -48,6 +52,14 @@ public class PieceType
 
                 case "cost":
                     parseCosts(data.getJSONArray("cost"));
+                    break;
+
+                case "usage":
+                    usage = data.getString(key);
+                    break;
+
+                case "events":
+                    events.parse(data.getJSONArray("events"));
                     break;
 
                 default:
@@ -90,5 +102,13 @@ public class PieceType
         return type;
     }
 
+    public String getUsage () { return usage; }
 
+    public void performEvents (Session session)
+    {
+        for (Event e : events.events)
+        {
+            e.applyRewards(session);
+        }
+    }
 }

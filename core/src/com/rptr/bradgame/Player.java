@@ -26,9 +26,14 @@ public class Player
         this.pieces.addAll(pieces);
     }
 
-    void givePiece (Piece piece)
+    void givePiece (Session session, Piece piece)
     {
         pieces.add(piece);
+
+        if (piece.getType().getUsage().equals("immediate"))
+        {
+            piece.getType().performEvents(session);
+        }
     }
 
     ArrayList<Piece> getAllPieces ()

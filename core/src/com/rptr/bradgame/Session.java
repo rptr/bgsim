@@ -72,8 +72,9 @@ public class Session
         for (Player p : players)
         {
             for (int i = 0; i < amount; i ++)
-                p.givePiece(game.getRandomPieceOfCategory(category));
+                p.givePiece(this, game.getRandomPieceOfCategory(category));
         }
+
         System.out.format("All players get %d %s\n", amount, category);
     }
 

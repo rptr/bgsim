@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Event
+class Event
 {
     String type;
     ArrayList<Reward> rewards;
