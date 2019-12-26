@@ -44,7 +44,7 @@ public class Session {
 
     private void runState ()
     {
-        System.out.format("Entering state %s\n", state);
+        System.out.format("Entering state %s\n", state.getName());
 
         for (Player p : players)
         {
@@ -52,17 +52,7 @@ public class Session {
             currentPlayer = 0;
         }
 
-        performEvents();
-    }
-
-    private void performEvents ()
-    {
-        ArrayList<Event> events = state.getEvents();
-
-        for (Event e : events)
-        {
-            e.applyRewards(this);
-        }
+        state.performEvents(this);
     }
 
     private void transition ()
@@ -72,14 +62,14 @@ public class Session {
         runState();
     }
 
-    void givePiece (String piece, int amount)
+    void givePiecesOfCategory (String category, int amount)
     {
-        System.out.format("All players get %d %s\n", amount, piece);
-    }
-
-    void newPiece ()
-    {
-
+        for (Player p : players)
+        {
+            for (int i = 0; i < amount; i ++)
+                p.givePiece(game.getRandomPieceOfCategory(category));
+        }
+        System.out.format("All players get %d %s\n", amount, category);
     }
 
     GameType getGame ()

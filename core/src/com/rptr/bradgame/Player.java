@@ -24,6 +24,11 @@ public class Player
         this.pieces.addAll(pieces);
     }
 
+    void givePiece (Piece piece)
+    {
+        pieces.add(piece);
+    }
+
     @Override
     public String toString ()
     {

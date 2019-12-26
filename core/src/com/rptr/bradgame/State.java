@@ -27,6 +27,14 @@ public class State
         name = obj.getString("name");
     }
 
+    void performEvents (Session session)
+    {
+        for (Event e : events)
+        {
+            e.applyRewards(session);
+        }
+    }
+
     String getName ()
     {
         return name;

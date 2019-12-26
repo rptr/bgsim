@@ -38,7 +38,7 @@ public class Event
     {
         for (Reward reward : rewards)
         {
-            session.givePiece(reward.piece, reward.amount);
+            session.givePiecesOfCategory(reward.category, reward.amount);
         }
     }
 }

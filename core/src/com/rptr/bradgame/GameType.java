@@ -1,10 +1,15 @@
 package com.rptr.bradgame;
 
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer;
+import com.badlogic.gdx.math.MathUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.awt.image.AreaAveragingScaleFilter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 class GameType
 {
@@ -15,12 +20,32 @@ class GameType
     private JSONObject settings;
     private ArrayList<State> states;
     private ArrayList<Transition> transitions;
+    private HashMap<String, ArrayList<PieceType>> categories;
 
     GameType ()
     {
         states = new ArrayList<>();
         transitions = new ArrayList<>();
         pieceTypes = new ArrayList<>();
+        categories = new HashMap<>();
+    }
+
+    void save ()
+    {
+        System.out.println("Setting up piece categories...");
+
+        for (PieceType type : pieceTypes)
+        {
+            String category = type.getCategory();
+
+            if (!category.isEmpty())
+            {
+                if (!categories.containsKey(category))
+                    categories.put(category, new ArrayList<PieceType>());
+
+                categories.get(category).add(type);
+            }
+        }
     }
 
     String getSettingsValue (String key)
@@ -194,5 +219,23 @@ class GameType
         }
 
         return getState(next);
+    }
+
+    ArrayList<PieceType> getPieceCategory (String category)
+    {
+        return categories.get(category);
+    }
+
+    Piece getRandomPieceOfCategory (String category)
+    {
+        if (!categories.containsKey(category))
+            return null;
+
+        ArrayList<PieceType> all = getPieceCategory(category);
+
+        PieceType type = all.get(MathUtils.random(all.size() - 1));
+        Piece piece = new Piece(type, 0);
+
+        return piece;
     }
 }

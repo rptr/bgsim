@@ -36,12 +36,12 @@ public class BradGame extends ApplicationAdapter {
 				"states : [" +
 					"{name : 'pregame'," +
 					" events : [" +
-					"{reward : [{piece : card, amount : 10}]}" +
+					"{reward : [{piece : 'project cards', amount : 10}]}" +
 					"]}," +
 					"{name : 'game'}," +
 					"{name : 'production'," +
 					" events : [" +
-					"{reward : [{piece : card, amount : 4}]}" +
+					"{reward : [{piece : 'project cards', amount : 4}]}" +
 					"]}," +
 					"{name : 'count score'}" +
 				"]," + // states
@@ -81,8 +81,8 @@ public class BradGame extends ApplicationAdapter {
 					"{type : 'heat'}" +
 				"]," + // player
 
-				"privateLayout : [" +
-				"" +
+				"personalLayout : [" +
+					"{}" +
 				"]" +
 
 				"" +
@@ -112,14 +112,19 @@ public class BradGame extends ApplicationAdapter {
 
 		mars.parsePieceType("{category : 'project cards'," +
 				"cost : [{money : 7}]," +
-				"name : 'SF Memorial'," +
-				"reward : [{piece : card, amount : 1}]}");
+				"id : 'SF Memorial'," +
+				"reward : [{piece : 'project cards', amount : 1}]," +
+				"file : 'card.png'}");
 		mars.parsePieceType("{category : 'prelude cards'," +
-				"name : 'Allied Banks'," +
-				"reward : [{piece : money, amount : 3}]}");
+				"id : 'Allied Banks'," +
+				"reward : [{piece : money, amount : 3}]," +
+				"file : 'card.png'}");
 		mars.parsePieceType("{category : 'corporation cards', " +
-				"name : 'Beginner Corporation'," +
-				"reward : [{piece : money, amount : 42}]}");
+				"id : 'Beginner Corporation'," +
+				"reward : [{piece : money, amount : 42}]," +
+				"file : 'card.png'}");
+
+		mars.save();
 
 		session = new Session(mars);
 		gui.setSession(session);
@@ -133,7 +138,7 @@ public class BradGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 
-		// game info
+		// FOOTER
 		String footer = session.getGame().getSettingsValue("name") +
 				" | " +
 				session.getState() +
@@ -142,8 +147,7 @@ public class BradGame extends ApplicationAdapter {
 
 		font.draw(batch, footer, 10, 20);
 
-		// game state
-
+		// STATIC BOARD
 		int i = 0;
 		for (Piece p : session.pieces)
 		{
@@ -160,7 +164,7 @@ public class BradGame extends ApplicationAdapter {
 			}
 		}
 
-		// Player state
+		// PLAYER BOARD
 		i = 0;
 		for (Player p : session.players)
 		{
@@ -170,15 +174,22 @@ public class BradGame extends ApplicationAdapter {
 
 			for (Piece piece : p.pieces)
 			{
-				String info = piece.toString();
-				font.draw(batch, info, 200, 700 - i * 20);
-				i++;
+				if (piece.getType().getType().equals("number"))
+				{
+					String info = piece.toString();
+					font.draw(batch, info, 200, 700 - i * 20);
+					i++;
+
+				} else
+				{
+					Gfx.drawPiece(batch, piece);
+				}
 			}
 
 			i ++;
 		}
 
-		// Turn
+		// TURN
 		font.draw(batch, session.getTurnInfo(), 400, 700);
 
 		batch.end();
