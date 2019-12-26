@@ -214,15 +214,6 @@ public class BradGame extends ApplicationAdapter {
 		// TURN
 		font.draw(batch, session.getTurnInfo(), 400, 700);
 
-		// WIDGETS
-		ArrayList<Widget> layout = session.getGame().getPersonalLayout();
-		ArrayList<Piece> pieces = session.getPlayer().getAllPieces();
-
-		for (Widget widget : layout)
-		{
-			widget.draw(batch, pieces);
-		}
-
 		batch.end();
 
 		gui.draw();

@@ -5,13 +5,17 @@ import com.badlogic.gdx.Game;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Session {
+public class Session
+{
     int turn;
     State state;
     ArrayList<Player> players;
     private GameType game;
     ArrayList<Piece> pieces;
     int currentPlayer;
+
+    // XXX TEMP too lazy for observer
+    boolean guiUpdated = true;
 
     Session (GameType game)
     {
@@ -58,6 +62,7 @@ public class Session {
     private void transition ()
     {
         state = game.getNextState(state);
+        guiUpdated = true;
 
         runState();
     }

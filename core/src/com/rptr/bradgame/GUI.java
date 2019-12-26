@@ -5,16 +5,23 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import javax.xml.soap.Text;
 
 public class GUI
 {
@@ -22,6 +29,8 @@ public class GUI
     private Table table;
     private Skin skin;
     private Session currentSession;
+
+    private Table layoutTable;
 
     void setup ()
     {
@@ -36,6 +45,7 @@ public class GUI
         skin.add("white", new Texture(pixmap));
 
         skin.add("default", new BitmapFont());
+
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
         textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
@@ -44,20 +54,31 @@ public class GUI
         textButtonStyle.font = skin.getFont("default");
         skin.add("default", textButtonStyle);
 
+        Texture tex = new Texture(Gdx.files.internal("card.png"));
+        TextureRegion region = new TextureRegion(tex);
+        ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.up = new TextureRegionDrawable(region);
+        skin.add("default", imageButtonStyle);
+
         table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
 
+        layoutTable = new Table();
+        table.setFillParent(true);
+        table.addActor(layoutTable);
+
         table.setDebug(true);
+        layoutTable.setDebug(true);
 
         final TextButton readyButton = new TextButton("Click when ready", skin);
         table.add(readyButton);
 
         readyButton.addListener(new ChangeListener() {
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-                readyButton.setText("Ready!");
-                boolean set = true;
-                currentSession.playerReady(set);
+            readyButton.setText("Ready!");
+            boolean set = true;
+            currentSession.playerReady(set);
             }
         });
 
@@ -66,7 +87,7 @@ public class GUI
 
         turnButton.addListener(new ChangeListener() {
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-                currentSession.passTurn();
+            currentSession.passTurn();
             }
         });
 
@@ -78,10 +99,49 @@ public class GUI
         currentSession = session;
     }
 
+    void updateLayout ()
+    {
+        layoutTable.clearChildren();
+
+        // WIDGETS
+        ArrayList<Widget> layout = currentSession.getGame().getPersonalLayout();
+        ArrayList<Piece> pieces = currentSession.getPlayer().getAllPieces();
+
+        for (Widget widget : layout)
+        {
+            final AccordionGroup hand = new AccordionGroup();
+            hand.space(-100);
+
+            for (Piece p : pieces) {
+                final ImageButton butt = new ImageButton(skin);
+                butt.setX(0);
+                butt.setY(0);
+                hand.addActor(butt);
+
+                butt.addListener(new ClickListener() {
+                    public void clicked(InputEvent event, float x, float y) {
+
+                    }
+                });
+            }
+
+            layoutTable.add(hand);
+        }
+
+        // XXX temp
+        currentSession.guiUpdated = false;
+    }
+
     void draw ()
     {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+
+        // XXX temp
+        if (currentSession.guiUpdated)
+        {
+            updateLayout();
+        }
     }
 
     void dispose ()
