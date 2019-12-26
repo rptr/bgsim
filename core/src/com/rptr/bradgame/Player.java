@@ -60,6 +60,12 @@ public class Player
         return null;
     }
 
+    void playPiece (Piece piece)
+    {
+        pieces.remove(piece);
+        System.out.format("Play & remove piece %s\n", piece.toString());
+    }
+
     @Override
     public String toString ()
     {

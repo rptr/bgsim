@@ -141,11 +141,14 @@ class GameType
         for (int i = 0; i < layout.length(); i ++)
         {
             JSONObject obj = (JSONObject)layout.get(i);
+            String clickAction = obj.has("click") ? obj.getString("click") : "";
+
             this.layout.add(new Widget(
                     obj.getString("widget"),
                     obj.getString("category"),
                     obj.getInt("x"),
-                    obj.getInt("y")));
+                    obj.getInt("y"),
+                    clickAction));
         }
     }
 

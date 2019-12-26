@@ -6,13 +6,14 @@ import java.util.ArrayList;
 
 public class Widget
 {
-    String type, category;
+    String type, category, clickAction;
     int x, y;
 
-    Widget (String type, String category, int x, int y)
+    Widget (String type, String category, int x, int y, String click)
     {
         this.type = type;
         this.category = category;
+        this.clickAction = click;
         this.x = x;
         this.y = y;
     }

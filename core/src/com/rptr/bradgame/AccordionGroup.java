@@ -26,6 +26,9 @@ public class AccordionGroup extends HorizontalGroup
     {
         super.draw(batch, parentAlpha);
 
+        if (getChildren().isEmpty())
+            return;
+
         float x = Gdx.input.getX() - getX();
         float w = getPrefWidth();
         float part = w / sortedChildren.size();

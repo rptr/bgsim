@@ -100,6 +100,16 @@ public class GUI
         currentSession = session;
     }
 
+    void selectWidgetPiece (Widget widget, Piece piece)
+    {
+        if (widget.clickAction.equals("play"))
+        {
+            currentSession.getPlayer().playPiece(piece);
+        }
+
+        updateLayout();
+    }
+
     void updateLayout ()
     {
         layoutTable.clearChildren();
@@ -108,14 +118,14 @@ public class GUI
         ArrayList<Widget> layout = currentSession.getGame().getPersonalLayout();
         ArrayList<Piece> pieces = currentSession.getPlayer().getAllPieces();
 
-        for (Widget widget : layout)
+        for (final Widget widget : layout)
         {
             final AccordionGroup hand = new AccordionGroup();
             // stack them
             hand.space(-110);
             hand.setPosition(widget.x, widget.y);
 
-            for (Piece p : pieces) {
+            for (final Piece p : pieces) {
                 if (!p.getType().getCategory().equals(widget.category))
                     continue;
 
@@ -124,7 +134,7 @@ public class GUI
 
                 butt.addListener(new ClickListener() {
                     public void clicked(InputEvent event, float x, float y) {
-
+                        selectWidgetPiece(widget, p);
                     }
                 });
             }
