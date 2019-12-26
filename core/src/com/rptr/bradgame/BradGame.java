@@ -98,8 +98,8 @@ public class BradGame extends ApplicationAdapter {
 				"]," + // player
 
 				"personalLayout : [" +
-					"{widget : 'card hand', category : 'project cards', x : 20, y: 200}," +
-					"{widget : 'card hand', category : 'prelude cards', x : 600, y : 200}," +
+					"{widget : 'card hand', category : 'project cards', x : 20, y: 40}," +
+					"{widget : 'card hand', category : 'prelude cards', x : 600, y : 40}," +
 					"{widget : 'card hand', category : 'corporation cards', x : 600, y : 100}" +
 				"]" +
 
