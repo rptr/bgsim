@@ -56,7 +56,7 @@ public class Session
             currentPlayer = 0;
         }
 
-        state.performEvents(this);
+        state.performEvents(this, null);
     }
 
     private void transition ()
@@ -76,6 +76,11 @@ public class Session
         }
 
         System.out.format("All players get %d %s\n", amount, category);
+    }
+
+    void givePiecesOfType (String type, int amount)
+    {
+        System.out.format("give %d %s\n", amount, type);
     }
 
     GameType getGame ()

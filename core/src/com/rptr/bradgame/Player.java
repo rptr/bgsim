@@ -32,7 +32,7 @@ public class Player
 
         if (piece.getType().getUsage().equals("immediate"))
         {
-            piece.getType().performEvents(session);
+            piece.getType().performEvents(session, this);
         }
     }
 

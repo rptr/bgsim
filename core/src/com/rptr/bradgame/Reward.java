@@ -2,9 +2,8 @@ package com.rptr.bradgame;
 
 import java.util.ArrayList;
 
-abstract class Reward
+abstract class Reward extends Event
 {
-    abstract void give(Session session);
 }
 
 class IncomeReward extends Reward
@@ -17,7 +16,7 @@ class IncomeReward extends Reward
         this.incomePieceId = income;
     }
 
-    void give (Session session)
+    void apply (Session session, Player player)
     {
         ArrayList<Player> players = session.players;
 
@@ -26,6 +25,8 @@ class IncomeReward extends Reward
             int amount = p.getPiece(incomePieceId).getValue();
             p.incrementPiece(piece, amount);
         }
+
+        System.out.format("Everyone gets %s income!\n", incomePieceId);
     }
 }
 
@@ -40,8 +41,25 @@ class CategoryReward extends Reward
         this.amount = amount;
     }
 
-    void give (Session session)
+    void apply (Session session, Player player)
     {
         session.givePiecesOfCategory(category, amount);
+    }
+}
+
+class PieceReward extends Reward
+{
+    String pieceType;
+    int amount;
+
+    PieceReward (String pieceType, int amount)
+    {
+        this.pieceType = pieceType;
+        this.amount = amount;
+    }
+
+    void apply (Session session, Player player)
+    {
+        player.incrementPiece(pieceType, amount);
     }
 }

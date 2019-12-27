@@ -19,7 +19,31 @@ public class Events
         for (int i = 0; i < array.length(); i ++)
         {
             JSONObject evt = (JSONObject)array.get(i);
-            this.events.add(new Event(evt));
+
+            String type = evt.getString("type");
+            Reward newEvent = null;
+
+            if (type.equals("reward"))
+            {
+
+                if (evt.has("category")) {
+                    newEvent = new CategoryReward(
+                            evt.getString("category"),
+                            evt.getInt("amount"));
+
+                } else if (evt.has("income")) {
+                    newEvent = new IncomeReward(
+                            evt.getString("piece"),
+                            evt.getString("income"));
+
+                } else if (evt.has("piece") && evt.has("amount")) {
+                    newEvent = new PieceReward(
+                            evt.getString("piece"),
+                            evt.getInt("amount"));
+                }
+            }
+
+            this.events.add(newEvent);
         }
     }
 }

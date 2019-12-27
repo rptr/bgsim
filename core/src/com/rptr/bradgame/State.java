@@ -22,11 +22,11 @@ class State implements Eventful
         name = obj.getString("name");
     }
 
-    public void performEvents (Session session)
+    public void performEvents (Session session, Player player)
     {
         for (Event e : events.events)
         {
-            e.applyRewards(session);
+            e.apply(session, player);
         }
     }
 

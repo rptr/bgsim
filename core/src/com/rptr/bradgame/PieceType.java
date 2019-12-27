@@ -104,11 +104,13 @@ public class PieceType implements Eventful
 
     public String getUsage () { return usage; }
 
-    public void performEvents (Session session)
+    public void performEvents (Session session, Player player)
     {
         for (Event e : events.events)
         {
-            e.applyRewards(session);
+            e.apply(session, player);
         }
+
+        System.out.format("%s perform events!\n", getId());
     }
 }
