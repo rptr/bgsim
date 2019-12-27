@@ -1,0 +1,171 @@
+package com.rptr.bradgame;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.Buffer;
+import java.nio.charset.Charset;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+public class GameLoader {
+    static GameType load (String filepath) {
+        GameType game = new GameType();
+
+        FileHandle file = Gdx.files.internal(filepath);
+        String raw = file.readString();
+
+        game.parseSettings(raw);
+        game.save();
+        return game;
+
+//        String line = null;
+//        BufferedReader reader = file.reader(2000);
+//
+//        try {
+//            while ((line = reader.readLine()) != null) {
+//                System.out.println(line);
+//            }
+//        } catch (IOException e) {
+//            System.err.format("IOException: %s\n", e);
+//        }
+
+
+//        String data = "{" +
+//                "name : 'Terraforming Mars'," +
+//                "minPlayers : 1," +
+//                "maxPlayers : 5," +
+//                "startState : 'pregame'," +
+//                "finalState : 'count score'," +
+//
+//                "states : [" +
+//                "{name : 'pregame'," +
+//                " events : [" +
+//                "{type : reward, category : 'project cards', amount : 10}," +
+//                "{type : reward, category : 'prelude cards', amount : 2}," +
+//                "{type : reward, category : 'corporation cards', amount : 1}," +
+//                "]}," +
+//
+//                "{name : 'game'}," +
+//
+//                "{name : 'production'," +
+//                " events : [" +
+//                "{type : reward, category : 'project cards', amount : 4}," +
+//                "{type : reward, piece : 'money', income : 'moneyIncome'}," +
+//                "{type : reward, piece : 'money', income : 'rating'}" +
+//                "]}," +
+//
+//                "{name : 'count score'}" +
+//                "]," + // states
+//
+//                "transitions : [" +
+//                "{'from' : 'pregame', " +
+//                "'to' : 'game'," +
+//                "'conditions' : [ALL_READY]}," +
+//                "{'from' : 'game', " +
+//                "'to' : 'production'," +
+//                "'conditions' : [ALL_READY]}," +
+//                "{'from' : 'production', " +
+//                "'to' : 'game'," +
+//                "'conditions' : [ALL_READY]}," +
+//                "{'from' : 'production', " +
+//                "'to' : 'count score'," +
+//                "'conditions' : [ALL_READY, GAME_OVER]}" +
+//                "]," + // transitions
+//
+//                "board : [" +
+//                "{id : 'ocean stack', type : 'ocean stack', value : 9}," +
+//                "{id : temperature, type : temperature, value : -28}," +
+//                "{id : oxygen, type : oxygen, value : 0}," +
+//
+//                "{id : tiles}," +
+//                "{id : deck}," +
+//                "{id : discard}" +
+//                "]," + // board
+//
+//                "playerSetup : [" +
+//                "{type : 'rating', value : 20}," +
+//                "{type : 'money'}," +
+//                "{type : 'steel'}," +
+//                "{type : 'titanium'}," +
+//                "{type : 'plant'}," +
+//                "{type : 'energy'}," +
+//                "{type : 'heat'}," +
+//
+//                "{type : 'moneyIncome'}," +
+//                "{type : 'steelIncome'}," +
+//                "{type : 'titaniumIncome'}," +
+//                "{type : 'plantIncome'}," +
+//                "{type : 'energyIncome'}," +
+//                "{type : 'heatIncome'}," +
+//
+//                "{id : deck, type : 'card hand', x : 10, y : 120, click : 'play'}" +
+////					"{id : draft, type : 'card hand', x : 10, y: 400, click : 'select'}," +
+////					"{id : keep, type : 'card hand', x : 500, y: 400, click : 'deselect'}," +
+////					"{id : 'played type', widget : 'card hand', x : 500, y: 400}," +
+////					"{id : prelude, type : 'card hand', x : 1000, y : 120}," +
+////					"{id : corp, type : 'card hand', x : 800, y : 120}" +
+//                "]," + // player
+//
+//                "personalLayout : [" +
+//                "]" + // personal layout
+//
+//                "" +
+//                "}";
+//        mars.parseSettings(data);
+//
+//
+//        mars.parsePieceType("{id : 'ocean', category : 'tile'}");
+//        mars.parsePieceType("{id : 'city', category : 'tile'}");
+//        mars.parsePieceType("{id : 'forest', category : 'tile'}");
+//        mars.parsePieceType("{id : 'dust', category : 'tile'}");
+//
+//        mars.parsePieceType("{id : 'ocean stack', type: number}");
+//        mars.parsePieceType("{id : 'oxygen', type : number}");
+//        mars.parsePieceType("{id : 'temperature', type : number}");
+//
+//        mars.parsePieceType("{id : 'rating', type : number}");
+//        mars.parsePieceType("{id : 'money', type : number}");
+//        mars.parsePieceType("{id : 'steel', type : number}");
+//        mars.parsePieceType("{id : 'titanium', type : number}");
+//        mars.parsePieceType("{id : 'plant', type : number}");
+//        mars.parsePieceType("{id : 'energy', type : number}");
+//        mars.parsePieceType("{id : 'heat', type : number}");
+//
+//        mars.parsePieceType("{id : 'moneyIncome', type : number}");
+//        mars.parsePieceType("{id : 'steelIncome', type : number}");
+//        mars.parsePieceType("{id : 'titaniumIncome', type : number}");
+//        mars.parsePieceType("{id : 'plantIncome', type : number}");
+//        mars.parsePieceType("{id : 'energyIncome', type : number}");
+//        mars.parsePieceType("{id : 'heatIncome', type : number}");
+//
+//        mars.parsePieceType("{id : 'score guy', file : 'gem.png'}");
+//        mars.parsePieceType("{id : 'player marker', file : 'gem.png'}");
+//
+//        mars.parsePieceType("{id : 'card hand'}");
+//
+//        mars.parsePieceType("{category : 'project cards'," +
+//                "cost : [{piece : money, amount : 7}]," +
+//                "usage : player," +
+//                "id : 'SF Memorial'," +
+//                "events : [{type : reward, category : 'project cards', amount : 1}]," +
+//                "file : 'card.png'}");
+//        mars.parsePieceType("{category : 'prelude cards'," +
+//                "id : 'Allied Banks'," +
+//                "usage : immediate, " +
+//                "events : [{type : reward, piece : money, amount : 3}]," +
+//                "file : 'card.png'}");
+//        mars.parsePieceType("{category : 'corporation cards', " +
+//                "id : 'Beginner Corporation'," +
+//                "usage : immediate," +
+//                "events : [{type : reward, piece : money, amount : 42}]," +
+//                "file : 'card.png'}");
+
+    }
+}

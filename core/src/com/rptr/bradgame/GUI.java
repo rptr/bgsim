@@ -126,8 +126,8 @@ public class GUI
             hand.setPosition(widget.x, widget.y);
 
             for (final Piece p : pieces) {
-                if (!p.getType().getCategory().equals(widget.category))
-                    continue;
+//                if (!p.getType().getCategory().equals(widget.category))
+//                    continue;
 
                 final ImageButton butt = new ImageButton(skin);
                 hand.addActor(butt);

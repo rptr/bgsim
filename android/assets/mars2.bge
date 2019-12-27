@@ -1,0 +1,137 @@
+{
+    name : 'Terraforming Mars', 
+    minPlayers : 1, 
+    maxPlayers : 5, 
+    startState : 'pregame', 
+    finalState : 'count score', 
+
+    states :
+    [ 
+        {
+            name : 'pregame', 
+            events :
+            [ 
+                {type : reward, category : 'project cards', amount : 10}, 
+                {type : reward, category : 'prelude cards', amount : 2}, 
+                {type : reward, category : 'corporation cards', amount : 1}, 
+            ]
+        }, 
+
+        {
+            name : 'game'
+        }, 
+
+        {
+            name : 'production', 
+            events :
+            [ 
+                {type : reward, category : 'project cards', amount : 4}, 
+                {type : reward, piece : 'player money', income : 'player money income'}, 
+                {type : reward, piece : 'player money', income : 'player rating'} 
+            ]
+        }, 
+
+        {name : 'count score'} 
+    ],
+
+    transitions :
+    [ 
+        {
+            'from' : 'pregame',  
+            'to' : 'game', 
+            'conditions' : [ALL_READY]
+        },
+        {
+            'from' : 'game',  
+            'to' : 'production', 
+            'conditions' : [ALL_READY]
+        },
+        {
+            'from' : 'production',  
+            'to' : 'game', 
+            'conditions' : [ALL_READY]
+        },
+        {
+            'from' : 'production',  
+            'to' : 'count score', 
+            'conditions' : [ALL_READY, GAME_OVER]
+        }
+    ],
+
+    board : 
+    [ 
+        {id : 'ocean stack', type : 'ocean stack', value : 9}, 
+        {id : 'temperature meter', type : temperature, value : -28}, 
+        {id : 'oxygen meter', type : oxygen, value : 0}, 
+
+        {id : tiles}, 
+        {id : deck}, 
+        {id : discard} 
+    ],
+
+    playerSetup : 
+    [
+        {type : 'player rating', value : 20}, 
+        {type : 'player money'}, 
+        {type : 'player steel'}, 
+        {type : 'player titanium'}, 
+        {type : 'player plant'}, 
+        {type : 'player energy'}, 
+        {type : 'player heat'}, 
+
+        {type : 'player money income'}, 
+        {type : 'player steel income'}, 
+        {type : 'player titanium income'}, 
+        {type : 'player plant income'}, 
+        {type : 'player energy income'}, 
+        {type : 'player heat income'}, 
+
+        {id : deck, type : 'card hand', x : 10, y : 120, click : 'play'},
+    	{id : draft, type : 'card hand', x : 10, y: 400, click : 'select'},
+    	{id : keep, type : 'card hand', x : 500, y: 400, click : 'deselect'},
+    	{id : 'played type', widget : 'card hand', x : 500, y: 400},
+    	{id : prelude, type : 'card hand', x : 1000, y : 120}, 
+    	{id : corp, type : 'card hand', x : 800, y : 120} 
+    ],
+
+    personalLayout :
+    [
+    ],
+
+    pieces :
+    [
+        {id : 'ocean tile'},
+        {id : 'city tile'},
+        {id : 'greenery tile'},
+        {id : 'dust tile'},
+
+        {id : 'ocean stack', type : 'number'},
+        {id : 'oxygen meter', type : 'number'},
+        {id : 'temperature meter', type : 'number'},
+
+        {id : 'player rating', type : 'number'},
+        {id : 'player money', type : 'number'},
+        {id : 'player steel', type : 'number'},
+        {id : 'player titanium', type : 'number'},
+        {id : 'player plant', type : 'number'},
+        {id : 'player energy', type : 'number'},
+        {id : 'player heat', type : 'number'},
+
+        {id : 'player money income', type : 'number'},
+        {id : 'player steel income', type : 'number'},
+        {id : 'player titanium income', type : 'number'},
+        {id : 'player plant income', type : 'number'},
+        {id : 'player energy income', type : 'number'},
+        {id : 'player heat income', type : 'number'},
+
+        {id : 'player marker', file : 'gem.png'},
+
+        {id : 'card hand', file : 'gem.png'},
+
+        {id : 'SF Memorial', gfx : 'card.png', category : 'project cards'},
+
+        {id : 'Allied Banks', gfx : 'card.png', category : 'prelude cards'},
+
+        {id : 'Beginner Corporation', gfx : 'card.png', category : 'corporation cards'},
+    ]
+}

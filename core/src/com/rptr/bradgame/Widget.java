@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 public class Widget
 {
-    String type, category, clickAction;
+    String type, clickAction, id;
     int x, y;
 
-    Widget (String type, String category, int x, int y, String click)
+    Widget (String id, String type, int x, int y, String click)
     {
+        this.id = id;
         this.type = type;
-        this.category = category;
         this.clickAction = click;
         this.x = x;
         this.y = y;
@@ -24,8 +24,8 @@ public class Widget
 
         for (Piece p : pieces)
         {
-            if (!p.getType().getCategory().equals(category))
-                continue;
+//            if (!p.getType().getCategory().equals(category))
+//                continue;
 
             Gfx.drawPiece(batch, p, x + i * 20, y);
             i ++;

@@ -94,6 +94,10 @@ class GameType
                     parsePlayerLayout(settings.getJSONArray("personalLayout"));
                     break;
 
+                case "pieces":
+                    parsePieceTypes(settings.getJSONArray("pieces"));
+                    break;
+
                 default:
                     System.out.format("Unsupported setting: %s\n", key);
                     break;
@@ -143,12 +147,11 @@ class GameType
             JSONObject obj = (JSONObject)layout.get(i);
             String clickAction = obj.has("click") ? obj.getString("click") : "";
 
-            this.layout.add(new Widget(
-                    obj.getString("widget"),
-                    obj.getString("category"),
-                    obj.getInt("x"),
-                    obj.getInt("y"),
-                    clickAction));
+//            this.layout.add(new Widget(
+//                    obj.getString("widget"),
+//                    obj.getInt("x"),
+//                    obj.getInt("y"),
+//                    clickAction));
         }
     }
 
@@ -157,14 +160,23 @@ class GameType
         parsePieceType(new JSONObject(data));
     }
 
-    void parsePieceType (JSONObject data)
+    private void parsePieceTypes (JSONArray data)
+    {
+        for (int i = 0; i < data.length(); i ++)
+        {
+            JSONObject obj = (JSONObject)data.get(i);
+            parsePieceType(obj);
+        }
+    }
+
+    private void parsePieceType (JSONObject data)
     {
         PieceType newType = new PieceType(data);
         pieceTypes.add(newType);
-
+        System.out.format("Piece type: %s\n", newType.getName());
     }
 
-    PieceType getPieceType (String id)
+    private PieceType getPieceType (String id)
     {
         for (PieceType type : pieceTypes)
         {
