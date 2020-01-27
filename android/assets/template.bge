@@ -1,0 +1,23 @@
+{
+    name        : 'Monopoly',
+    minPlayers  : 2,
+    maxPlayers  : 6,
+    startState  : 'pregame',
+    finalState  : 'pregame',
+
+    states      :
+    [
+    ],
+
+    board       :
+    [
+    ],
+
+    playerSetup :
+    [
+    ],
+
+    pieces      :
+    [
+    ],
+}

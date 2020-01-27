@@ -11,9 +11,9 @@
             name : 'pregame', 
             events :
             [ 
-                {type : reward, category : 'project cards', amount : 10}, 
-                {type : reward, category : 'prelude cards', amount : 2}, 
-                {type : reward, category : 'corporation cards', amount : 1}, 
+                {type : give, category : 'project cards', amount : 10}, 
+                {type : give, category : 'prelude cards', amount : 2}, 
+                {type : give, category : 'corporation cards', amount : 1}, 
             ]
         }, 
 
@@ -61,8 +61,8 @@
     board : 
     [ 
         {id : 'ocean stack', type : 'ocean stack', value : 9}, 
-        {id : 'temperature meter', type : temperature, value : -28}, 
-        {id : 'oxygen meter', type : oxygen, value : 0}, 
+        {id : temperature, type : 'temperature meter', value : -28}, 
+        {id : oxygen, type : 'oxygen meter', value : 0}, 
 
         {id : tiles}, 
         {id : deck}, 
@@ -89,7 +89,7 @@
         {id : deck, type : 'card hand', x : 10, y : 120, click : 'play'},
     	{id : draft, type : 'card hand', x : 10, y: 400, click : 'select'},
     	{id : keep, type : 'card hand', x : 500, y: 400, click : 'deselect'},
-    	{id : 'played type', widget : 'card hand', x : 500, y: 400},
+    	{id : 'played', type : 'card hand', x : 500, y: 400},
     	{id : prelude, type : 'card hand', x : 1000, y : 120}, 
     	{id : corp, type : 'card hand', x : 800, y : 120} 
     ],

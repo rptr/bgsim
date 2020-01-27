@@ -1,0 +1,49 @@
+{
+    name        : 'Monopoly',
+    minPlayers  : 2,
+    maxPlayers  : 6,
+    startState  : 'pregame',
+    finalState  : 'pregame',
+
+    states      :
+    [
+    ],
+
+    board       :
+    [
+        {x : 0, y : 0, piece : 'jail'},
+
+        {x : 100, y : 0, piece : 'pentonville road'},
+        {x : 150, y : 0, piece : 'euston road'},
+        {x : 200, y : 0, piece : 'chance'},
+
+        {x : 250, y : 0, piece : 'the angel islington'},
+        {x : 300, y : 0, piece : 'kings cross station'},
+        {x : 350, y : 0, piece : 'income tax'},
+
+        {x : 400, y : 0, piece : 'whitechapel road'},
+        {x : 450, y : 0, piece : 'community chest'},
+        {x : 500, y : 0, piece : 'old kent road', id : 'tile 2', next : 'tile 3'},
+
+        {x : 550, y : 0, piece : 'go', id : 'tile 1', next : 'tile 2'},
+
+        {piece : 'shoe', parent : 'tile 1'},
+    ],
+
+    playerSetup :
+    [
+    ],
+
+    pieces      :
+    [
+        {id : money, type : number},
+        {id : shoe},
+    ],
+
+    triggers    :
+    [
+        {event: 'player turn start', action : PLAYER THROW DICE},
+        move piece as per dice...
+        when piece reaches final piece do action as per destination
+    ],
+}
